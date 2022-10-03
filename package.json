@@ -1,0 +1,33 @@
+{
+  "name": "@emsquared/otto_preact_tables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "umd:main": "dist/index.umd.js",
+  "unpkg": "dist/index.min.js",
+  "source": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "microbundle build --raw"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RockyEMSqr/otto_preact_tables.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RockyEMSqr/otto_preact_tables/issues"
+  },
+  "homepage": "https://github.com/RockyEMSqr/otto_preact_tables#readme",
+  "devDependencies": {
+    "microbundle": "^0.15.1",
+    "preact": "^10.10.2",
+    "@emsquared/otto_display": "git+https://github.com/RockyEMSqr/otto_display.git"
+  },
+  "dependencies": {
+    "luxon": "^3.0.4"
+  }
+}

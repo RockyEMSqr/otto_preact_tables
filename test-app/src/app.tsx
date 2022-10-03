@@ -2,6 +2,7 @@ import { useState } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
 import './app.css'
 import { Table } from '../../index'
+import SortableTable from '../../sortableTable'
 type Data = { name: string, x: number, y: number, dt: Date, class?: string }
 let data: Data[] = [
   { name: 'Foo', x: 5, y: 10, dt: new Date(), class: 'asdfasdf' },
@@ -12,6 +13,19 @@ export function App() {
 
   return (
     <>
+          <SortableTable class="table" style="width:100%" data={data} headers={["Name", "X", "Y", "DateTime"]}
+        rowDef={(
+          {
+            class: 'string',
+            columns: [
+              x => x.name,
+              x => x.x,
+              x => x.y,
+              { column: x => x.dt, class: 'asdf' }
+            ]
+          })}
+
+      />
       <Table class="table" style="width:100%" data={data} headers={["Name", "X", "Y", "DateTime"]}
         rowDef={(
           {

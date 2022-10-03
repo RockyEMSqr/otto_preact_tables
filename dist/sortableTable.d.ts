@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { Table } from './table';
-export default class SortableTable<DT, AdditionalProps = {}> extends Table<DT, AdditionalProps> {
+export declare class SortableTable<DT, AdditionalProps = {}> extends Table<DT, AdditionalProps> {
     state: {
         sortDirection: string;
         sortedIndex: null;

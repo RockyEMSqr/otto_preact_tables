@@ -2,7 +2,7 @@ import { h } from 'preact';
 import  {Table, ColumnDefinitionObject, HeaderData as HD } from './table';
 
 type HeaderData = HD & { sortable: boolean }
-export default class SortableTable<DT, AdditionalProps = {}> extends Table<DT, AdditionalProps> {
+export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, AdditionalProps> {
     state = { sortDirection: '', sortedIndex: null }
     // sortDirection = 'asc';
     bestGuessCompare(a, b) {

@@ -58,23 +58,29 @@ export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, Additiona
         }
     }
     sort(index) {
-        console.time('Sort')
-        if (!this.props.columns || !this.props.columns[index]) {
+        // console.time('Sort')
+        if (!this.props.columns && !this.props.rowDef) {
             return;
         }
         let d = this.props.data.sort((a, b) => {
             let av;
             let bv;
-            if (this.props.columns) {
-                if ((this.props.columns[index] as ColumnDefinitionObject).sort) {
-                    let colDef: ColumnDefinitionObject = this.props.columns[index] as ColumnDefinitionObject;
+            let col;
+            if(this.props.columns){
+                col =this.props.columns[index];
+            }else if(this.props.rowDef?.columns){
+                col = this.props.rowDef?.columns[index];
+            }
+            if (col) {
+                if ((col as ColumnDefinitionObject).sort) {
+                    let colDef: ColumnDefinitionObject = col as ColumnDefinitionObject;
                     if(colDef && colDef.sort){
                         av = colDef.sort(a);
                         bv = colDef.sort(b);
                     }
                 } else {
-                    av = this.getColumn(a, this.props.columns[index], null);
-                    bv = this.getColumn(b, this.props.columns[index], null);
+                    av = this.getColumn(a, col, null);
+                    bv = this.getColumn(b, col, null);
                 }
             }
 
@@ -82,7 +88,7 @@ export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, Additiona
 
         });
         this.setState({ sortedIndex: index, data: d, sortDirection: (!this.state.sortDirection ? 'a' : this.state.sortDirection == 'a' ? 'd' : 'a') });
-        console.timeEnd('Sort')
+        // console.timeEnd('Sort')
     }
     getHeader(index) {
         let cls = " ";

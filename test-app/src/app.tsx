@@ -2,11 +2,11 @@ import { useState } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
 import './app.css'
 import { Table } from '../../index'
-import SortableTable from '../../sortableTable'
+import {SortableTable} from '../../sortableTable'
 type Data = { name: string, x: number, y: number, dt: Date, class?: string }
 let data: Data[] = [
   { name: 'Foo', x: 5, y: 10, dt: new Date(), class: 'asdfasdf' },
-  { name: 'Foo', x: 5, y: 10, dt: new Date() }
+  { name: 'Foo', x: 4, y: 10, dt: new Date() }
 ]
 export function App() {
   const [count, setCount] = useState(0)
@@ -19,7 +19,7 @@ export function App() {
             class: 'string',
             columns: [
               x => x.name,
-              x => x.x,
+              {column:x => x.x, sort:x=>x.x},
               x => x.y,
               { column: x => x.dt, class: 'asdf' }
             ]

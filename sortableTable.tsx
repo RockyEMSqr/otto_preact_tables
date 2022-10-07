@@ -6,6 +6,9 @@ export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, Additiona
     state = { sortDirection: '', sortedIndex: null }
     // sortDirection = 'asc';
     bestGuessCompare(a, b) {
+        if(!this.state.sortDirection){
+            this.state.sortDirection = 'a';
+        }
         if (typeof a == 'number' && typeof b == 'number') {
             if (this.state.sortDirection == 'a') {
                 return a - b;

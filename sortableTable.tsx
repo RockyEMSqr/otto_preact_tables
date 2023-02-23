@@ -1,12 +1,12 @@
 import { h } from 'preact';
-import  {Table, ColumnDefinitionObject, HeaderData as HD } from './table';
+import { Table, ColumnDefinitionObject, HeaderData as HD } from './table';
 
 type HeaderData = HD & { sortable: boolean }
 export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, AdditionalProps> {
     state = { sortDirection: '', sortedIndex: null }
     // sortDirection = 'asc';
     bestGuessCompare(a, b) {
-        if(!this.state.sortDirection){
+        if (!this.state.sortDirection) {
             this.state.sortDirection = 'a';
         }
         if (typeof a == 'number' && typeof b == 'number') {
@@ -65,19 +65,22 @@ export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, Additiona
         if (!this.props.columns && !this.props.rowDef) {
             return;
         }
+        if (!this.getHeaderData(index).sortable) {
+            return;
+        }
         let d = this.props.data.sort((a, b) => {
             let av;
             let bv;
             let col;
-            if(this.props.columns){
-                col =this.props.columns[index];
-            }else if(this.props.rowDef?.columns){
+            if (this.props.columns) {
+                col = this.props.columns[index];
+            } else if (this.props.rowDef?.columns) {
                 col = this.props.rowDef?.columns[index];
             }
             if (col) {
                 if ((col as ColumnDefinitionObject).sort) {
                     let colDef: ColumnDefinitionObject = col as ColumnDefinitionObject;
-                    if(colDef && colDef.sort){
+                    if (colDef && colDef.sort) {
                         av = colDef.sort(a);
                         bv = colDef.sort(b);
                     }
@@ -93,25 +96,27 @@ export class SortableTable<DT, AdditionalProps = {}> extends Table<DT, Additiona
         this.setState({ sortedIndex: index, data: d, sortDirection: (!this.state.sortDirection ? 'a' : this.state.sortDirection == 'a' ? 'd' : 'a') });
         // console.timeEnd('Sort')
     }
-    getHeader(index) {
-        let cls = " ";
-        let label = "";
+    getHeaderData(index) {
         let hd: HeaderData = { label: '', class: '', sortable: false };
         if (this.props.headers) {
             if (typeof this.props.headers[index] == 'string') {
 
-                label = this.props.headers[index] as string;
-                hd.label = label;
-                if (label) {
+                hd.label = this.props.headers[index] as string;
+                if (hd.label) {
                     hd.sortable = true;
                 }
             }
-        } else {
-            if (this.props.headers) {
+            else {
                 hd = this.props.headers[index] as HeaderData;
             }
-            label = hd.label;
         }
+        return hd;
+    }
+    getHeader(index) {
+        let cls = " ";
+        let label = "";
+        let hd = this.getHeaderData(index);
+        label = hd.label;
 
         if (hd.sortable) {
             cls = 'sortable ' + (hd.class ? hd.class : '');

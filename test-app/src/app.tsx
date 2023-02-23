@@ -13,6 +13,21 @@ export function App() {
 
   return (
     <>
+
+<SortableTable class="table" style="width:100%" data={data} headers={[
+  {label:"Name"}, "X", "Y", "DateTime"]}
+        rowDef={(
+          {
+            class: 'string',
+            columns: [
+              x => x.name,
+              {column:x => x.x, sort:x=>x.x},
+              x => x.y,
+              { column: x => x.dt, class: 'asdf' }
+            ]
+          })}
+
+      />
           <SortableTable class="table" style="width:100%" data={data} headers={["Name", "X", "Y", "DateTime"]}
         rowDef={(
           {
